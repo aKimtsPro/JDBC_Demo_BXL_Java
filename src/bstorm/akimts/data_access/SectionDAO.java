@@ -30,7 +30,7 @@ public class SectionDAO implements DAO<Section, Long> {
             throw new IllegalArgumentException("toInsert should not be null");
 
         try (
-                Connection co = ConnectionFactory.getConnection();
+                Connection co = ConnectionFactory.getInstance().getConnection();
                 Statement stmt = co.createStatement();
         ) {
 
@@ -46,11 +46,9 @@ public class SectionDAO implements DAO<Section, Long> {
 
     @Override
     public Section getOne(Long aLong) {
-
         Section s = null;
-
         try (
-            Connection co = ConnectionFactory.getConnection();
+            Connection co = ConnectionFactory.getInstance().getConnection();
             Statement stmt = co.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM section WHERE section_id = "+ aLong);
         ) {
@@ -62,7 +60,6 @@ public class SectionDAO implements DAO<Section, Long> {
         catch (SQLException ex){
             throw new RuntimeException("SQL Error : " + ex.getMessage());
         }
-
         return s;
     }
 
@@ -71,7 +68,7 @@ public class SectionDAO implements DAO<Section, Long> {
         List<Section> list = new ArrayList<>();
 
         try (
-            Connection co = ConnectionFactory.getConnection();
+            Connection co = ConnectionFactory.getInstance().getConnection();
             Statement stmt = co.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM section");
         ) {
@@ -94,7 +91,7 @@ public class SectionDAO implements DAO<Section, Long> {
             throw new IllegalArgumentException("section should not be null");
 
         try (
-            Connection co = ConnectionFactory.getConnection();
+            Connection co = ConnectionFactory.getInstance().getConnection();
             Statement stmt = co.createStatement();
         ) {
 
@@ -113,7 +110,7 @@ public class SectionDAO implements DAO<Section, Long> {
     public boolean delete(Long id) {
 
         try (
-                Connection co = ConnectionFactory.getConnection();
+                Connection co = ConnectionFactory.getInstance().getConnection();
                 Statement stmt = co.createStatement();
         ) {
 
@@ -123,8 +120,6 @@ public class SectionDAO implements DAO<Section, Long> {
         catch (SQLException ex){
             return false;
         }
-
-
     }
 
     private Section extract(ResultSet rs) throws SQLException {
